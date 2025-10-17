@@ -226,7 +226,11 @@ export default {
   },
   computed: {
     isM4B() {
-      return this.libraryItem.path.split('.').pop() === 'm4b'
+      let path = this.libraryFiles[0].metadata.filename;
+      let check = path.split('.').pop() === 'm4b';
+      console.log('aaa', path);
+      console.log('aaa', check);
+      return check;
     },
     userToken() {
       return this.$store.getters['user/getToken']
