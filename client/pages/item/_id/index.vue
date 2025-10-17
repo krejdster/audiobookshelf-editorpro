@@ -50,6 +50,40 @@
             <div class="hidden md:block grow" />
           </div>
 
+          <div class="grow px-2 py-6 lg:py-0 md:px-10">
+            <!-- Edytuj-->
+            <ui-btn :aria-label="$strings.LabelEdit" @click="editClick" class="w-full" style="margin: 5px 0">
+              Edytor szczegolow
+            </ui-btn>
+
+            <!-- Edit chapters-->
+            <div class="w-full">
+              <ui-btn v-if="userCanUpdate" :to="`/audiobook/${libraryItemId}/chapters`" class="w-full" color="bg-primary" @click="clickEditChapters" style="display: block; margin:5px 0">
+                Edytor rozdzialow
+              </ui-btn>
+            </div>
+
+            <!-- Convert to m4b-->
+            <div class="w-full" >
+              <ui-btn :to="`/audiobook/${libraryItemId}/manage?tool=m4b`" class="w-full" style="display:block; margin:5px 0">
+                Konwertuj na M4B
+              </ui-btn>
+            </div>
+
+            <!-- Quick embed -->
+            <div class="w-full">
+              <ui-btn v-if="!isMetadataEmbedQueued && !isEmbedTaskRunning" class="w-full" color="bg-primary" style="margin:5px 0" @click.stop="quickEmbed">
+                Wyryj metadane
+              </ui-btn>
+            </div>
+
+            <!-- Quick rescan library-->
+            <ui-btn @click="quickRescanLib" class="w-full" style="margin: 5px 0">
+              Rescan biblioteki
+            </ui-btn>
+          </div>
+
+
           <!-- Podcast episode downloads queue -->
           <div v-if="episodeDownloadsQueued.length" class="px-4 py-2 mt-4 bg-info/40 text-sm font-semibold rounded-md text-gray-100 relative max-w-max mx-auto md:mx-0">
             <div class="flex items-center">
@@ -128,15 +162,15 @@
             <button v-if="isDescriptionClamped" class="py-0.5 flex items-center text-slate-300 hover:text-white" @click="showFullDescription = !showFullDescription">{{ showFullDescription ? $strings.ButtonReadLess : $strings.ButtonReadMore }} <span class="material-symbols text-xl pl-1" v-html="showFullDescription ? 'expand_less' : '&#xe313;'" /></button>
           </div>
 
-          <tables-chapters-table v-if="chapters.length" :library-item="libraryItem" class="mt-6" />
+          <tables-chapters-table v-if="chapters.length" :library-item="libraryItem" class="mt-6" keep-open/>
 
-          <tables-tracks-table v-if="tracks.length" :title="$strings.LabelStatsAudioTracks" :tracks="tracksWithAudioFile" :is-file="isFile" :library-item-id="libraryItemId" class="mt-6" />
+          <tables-tracks-table v-if="tracks.length" :title="$strings.LabelStatsAudioTracks" :tracks="tracksWithAudioFile" :is-file="isFile" :library-item-id="libraryItemId" class="mt-6" keep-open/>
 
-          <tables-podcast-lazy-episodes-table ref="episodesTable" v-if="isPodcast" :library-item="libraryItem" />
+          <tables-podcast-lazy-episodes-table ref="episodesTable" v-if="isPodcast" :library-item="libraryItem" keep-open />
 
-          <tables-ebook-files-table v-if="ebookFiles.length" :library-item="libraryItem" class="mt-6" />
+          <tables-ebook-files-table v-if="ebookFiles.length" :library-item="libraryItem" class="mt-6" keep-open/>
 
-          <tables-library-files-table v-if="libraryFiles.length" :library-item="libraryItem" class="mt-6" />
+          <tables-library-files-table v-if="libraryFiles.length" :library-item="libraryItem" class="mt-6" keep-open />
         </div>
       </div>
     </div>
@@ -434,6 +468,27 @@ export default {
     }
   },
   methods: {
+    quickRescanLib(force = true) {
+      this.$store
+        .dispatch('libraries/requestLibraryScan', { libraryId: this.$store.state.libraries.currentLibraryId, force })
+        .then(() => {
+          // this.$toast.success(this.$strings.ToastLibraryScanStarted)
+        })
+        .catch((error) => {
+          console.error('Failed to start scan', error)
+          this.$toast.error(this.$strings.ToastLibraryScanFailedToStart)
+        })
+    },
+    quickEmbed() {
+      this.$axios
+        .$post(`/api/tools/item/${this.libraryItemId}/embed-metadata`)
+        .then(() => {
+          console.log('Audio metadata encode started')
+        })
+        .catch((error) => {
+          console.error('Audio metadata encode failed', error)
+        })
+    },
     selectBookmark(bookmark) {
       if (!bookmark) return
       if (this.isStreaming) {
@@ -600,18 +655,7 @@ export default {
       }
     },
     clearProgressClick() {
-      if (!this.userMediaProgress) return
-
-      const payload = {
-        message: this.$strings.MessageConfirmResetProgress,
-        callback: (confirmed) => {
-          if (confirmed) {
-            this.clearProgress()
-          }
-        },
-        type: 'yesNo'
-      }
-      this.$store.commit('globals/setConfirmPrompt', payload)
+      this.clearProgress()
     },
     clearProgress() {
       this.resettingProgress = true

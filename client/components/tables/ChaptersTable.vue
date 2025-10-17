@@ -91,21 +91,12 @@ export default {
           queueItems: [queueItem]
         })
       } else {
-        const payload = {
-          message: `Start playback for "${this.metadata.title}" at ${this.$secondsToTimestamp(time)}?`,
-          callback: (confirmed) => {
-            if (confirmed) {
-              this.$eventBus.$emit('play-item', {
-                libraryItemId: this.libraryItemId,
-                episodeId: null,
-                startTime: time,
-                queueItems: [queueItem]
-              })
-            }
-          },
-          type: 'yesNo'
-        }
-        this.$store.commit('globals/setConfirmPrompt', payload)
+        this.$eventBus.$emit('play-item', {
+          libraryItemId: this.libraryItemId,
+          episodeId: null,
+          startTime: time,
+          queueItems: [queueItem]
+        })
       }
     },
     clickEditChapters() {

@@ -229,7 +229,7 @@ export default {
       encodingOptions: {
         bitrate: '128k',
         channels: '2',
-        codec: 'aac'
+        codec: 'copy'
       }
     }
   },
@@ -332,6 +332,7 @@ export default {
       localStorage.setItem('embedMetadataChannels', val)
     },
     codecChanged(val) {
+      console.log('aaaa');
       localStorage.setItem('embedMetadataCodec', val)
     },
     cancelEncodeClick() {
@@ -416,6 +417,7 @@ export default {
       this.shouldBackupAudioFiles = shouldBackupAudioFiles != 0
 
       if (this.encodeTaskHasEncodingOptions) {
+        console.log('has encoding options');
         if (this.encodeTask.data.encodeOptions.bitrate) this.encodingOptions.bitrate = this.encodeTask.data.encodeOptions.bitrate
         if (this.encodeTask.data.encodeOptions.channels) this.encodingOptions.channels = this.encodeTask.data.encodeOptions.channels
         if (this.encodeTask.data.encodeOptions.codec) this.encodingOptions.codec = this.encodeTask.data.encodeOptions.codec

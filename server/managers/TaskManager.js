@@ -30,6 +30,11 @@ class TaskManager {
    * @param {Task} task
    */
   taskFinished(task) {
+    // // TODO hardcode refresh lib after successful m4b encode
+    // if(task.action === 'encode-m4b' && task.isFinished === true) {
+    //   AudioMetadataMangaer.updateMetadataForItem(task.data.userId, task.data.libraryItemId, {})
+    // }
+    // console.log(task);
     if (this.tasks.some((t) => t.id === task.id)) {
       this.tasks = this.tasks.filter((t) => t.id !== task.id)
       SocketAuthority.emitter('task_finished', task.toJSON())
