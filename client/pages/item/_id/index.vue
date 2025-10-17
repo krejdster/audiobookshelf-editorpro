@@ -65,15 +65,20 @@
 
             <!-- Convert to m4b-->
             <div class="w-full" >
-              <ui-btn :to="`/audiobook/${libraryItemId}/manage?tool=m4b`" class="w-full" style="display:block; margin:5px 0">
-                Konwertuj na M4B
+              <ui-btn :to="`/audiobook/${libraryItemId}/manage?tool=m4b`" class="w-full" :style="`
+                background: ${isM4B ? '#106636' : '#9b0d0d'};
+                display:block;
+                margin:5px 0
+              `">
+                <span v-if="isM4B">Plik jest juz M4B</span>
+                <span v-if="!isM4B">Konwertuj na M4B</span>
               </ui-btn>
             </div>
 
             <!-- Quick embed -->
             <div class="w-full">
               <ui-btn v-if="!isMetadataEmbedQueued && !isEmbedTaskRunning" class="w-full" color="bg-primary" style="margin:5px 0" @click.stop="quickEmbed">
-                Wyryj metadane
+                Wbuduj metadane
               </ui-btn>
             </div>
 
@@ -220,6 +225,9 @@ export default {
     }
   },
   computed: {
+    isM4B() {
+      return this.libraryItem.path.split('.').pop() === 'm4b'
+    },
     userToken() {
       return this.$store.getters['user/getToken']
     },
