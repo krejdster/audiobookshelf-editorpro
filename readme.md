@@ -16,6 +16,14 @@
 
 [Audiobookshelf](https://github.com/advplyr/audiobookshelf/) is a self-hosted audiobook and podcast server.
 
+Audiobookshelf EditPro is a swiss tool for swift editing of broken metadata. With this toool, it's easy to quickly do all of the operations on the book's metadata:
+- quick edit most important details
+- quick access for editing chapters
+- quick link for m4b conversion
+- quick shortcut to embed metadata
+- quick library rescan directly from book page
+- this version of Audiobookshelf has all the confirmation messages disabled for quick UI movement
+
 # Run from source
 
 ### Dev Container Setup
