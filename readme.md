@@ -1,6 +1,7 @@
 <br />
 <div align="center">
    <img alt="Banner" src="https://github.com/krejdster/audiobookshelf-editorpro/raw/master/images/EditProHeader.png" width="600">
+</div>
 
 # About
 
