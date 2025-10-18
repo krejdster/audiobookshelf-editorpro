@@ -3,6 +3,20 @@
     <div id="item-page-wrapper" class="w-full h-full overflow-y-auto px-2 py-6 lg:p-8">
       <div class="flex flex-col lg:flex-row max-w-6xl mx-auto">
         <div class="w-full flex justify-center lg:block lg:w-52" style="min-width: 208px">
+          <div class="relative group">
+            <div class="flex">
+              <div class="w-1/2">
+                <ui-btn :aria-label="$strings.LabelEdit" @click="goPrevBook" class="w-full" style="margin: 5px 0">
+                  Prev book
+                </ui-btn>
+              </div>
+              <div class="w-1/2">
+                <ui-btn :aria-label="$strings.LabelEdit" @click="goNextBook" class="w-full" style="margin: 5px 0">
+                  Next book
+                </ui-btn>
+              </div>
+            </div>
+          </div>
           <div class="relative group" style="height: fit-content">
             <covers-book-cover class="relative group-hover:brightness-75 transition cursor-pointer" expand-on-click :library-item="libraryItem" :width="bookCoverWidth" :book-cover-aspect-ratio="bookCoverAspectRatio" />
 
@@ -486,6 +500,46 @@ export default {
     }
   },
   methods: {
+    async goPrevBook() {
+      var el = document.querySelector('button[aria-label="Close player"]')
+      el === null ? [] : el.click()
+      this.$store.commit('setMediaPlaying', null)
+
+      var allBooks = await this.$axios.$get(`/api/libraries/${this.$store.state.libraries.currentLibraryId}/items?sort=media.metadata.title&desc=0&limit=10000&page=0&minified=1&include=rssfeed,numEpisodesIncomplete,share`).catch((error) => {
+        var errorMsg = error.response && error.response.data ? error.response.data : 'Failed to fetch library'
+        this.$toast.error(errorMsg)
+        return null
+      })
+      var currentIndex = allBooks.results.findIndex(x => {
+        return x.id === this.libraryItemId
+      });
+      if(currentIndex-1 < 0) {
+        this.$toast.error('No more books')
+        return;
+      }
+      var prevBookId = allBooks.results[currentIndex-1].id;
+      this.$router.push(`/item/${prevBookId}`)
+    },
+    async goNextBook() {
+      var el = document.querySelector('button[aria-label="Close player"]')
+      el === null ? [] : el.click()
+      this.$store.commit('setMediaPlaying', null)
+
+      var allBooks = await this.$axios.$get(`/api/libraries/${this.$store.state.libraries.currentLibraryId}/items?sort=media.metadata.title&desc=0&limit=10000&page=0&minified=1&include=rssfeed,numEpisodesIncomplete,share`).catch((error) => {
+        var errorMsg = error.response && error.response.data ? error.response.data : 'Failed to fetch library'
+        this.$toast.error(errorMsg)
+        return null
+      })
+      var currentIndex = allBooks.results.findIndex(x => {
+        return x.id === this.libraryItemId
+      });
+      if(currentIndex+1 >= allBooks.results.length) {
+        this.$toast.error('No more books')
+        return;
+      }
+      var nextBookId = allBooks.results[currentIndex+1].id;
+      this.$router.push(`/item/${nextBookId}`)
+    },
     quickRescanLib(force = true) {
       this.$store
         .dispatch('libraries/requestLibraryScan', { libraryId: this.$store.state.libraries.currentLibraryId, force })
