@@ -1,16 +1,6 @@
 <br />
 <div align="center">
-   <img alt="Audiobookshelf Banner" src="https://github.com/advplyr/audiobookshelf/raw/master/images/banner.svg" width="600">
-
-  <p align="center">
-    <br />
-    <a href="https://audiobookshelf.org/docs">Documentation</a>
-    ·
-    <a href="https://audiobookshelf.org/guides">User Guides</a>
-    ·
-    <a href="https://audiobookshelf.org/support">Support</a>
-  </p>
-</div>
+   <img alt="Banner" src="https://github.com/krejdster/audiobookshelf-editorpro/raw/master/images/EditProHeader.png" width="600">
 
 # About
 
