@@ -78,13 +78,13 @@
             <!-- Quick embed -->
             <div class="w-full">
               <ui-btn v-if="!isMetadataEmbedQueued && !isEmbedTaskRunning" class="w-full" color="bg-primary" style="margin:5px 0" @click.stop="quickEmbed">
-                Wbuduj metadane
+                Wbuduj metadane [Tasks: {{ this.tasks }}]
               </ui-btn>
             </div>
 
             <!-- Quick rescan library-->
             <ui-btn @click="quickRescanLib" class="w-full" style="margin: 5px 0">
-              Rescan biblioteki
+              Rescan biblioteki [Tasks: {{ this.tasks }}]
             </ui-btn>
           </div>
 
@@ -225,6 +225,10 @@ export default {
     }
   },
   computed: {
+    tasks() {
+      let getTasks = this.$store.getters['tasks/getTasksByLibraryItemId'](this.libraryItemId)
+      return getTasks.length;
+    },
     isM4B() {
       let path = this.libraryFiles[0].metadata.filename;
       let check = path.split('.').pop() === 'm4b';

@@ -9,6 +9,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  getTasks: () => () => {
+    return state.tasks;
+  },
   getTasksByLibraryItemId: (state) => (libraryItemId) => {
     return state.tasks.filter((t) => t.data?.libraryItemId === libraryItemId)
   },
