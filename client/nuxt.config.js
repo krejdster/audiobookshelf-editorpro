@@ -23,7 +23,7 @@ module.exports = {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Audiobookshelf',
+    title: 'ABS EditPro',
     htmlAttrs: {
       lang: 'en'
     },
