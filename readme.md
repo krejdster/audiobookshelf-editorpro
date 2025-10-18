@@ -30,10 +30,11 @@ Audiobookshelf EditPro is a swiss tool for ninja editing of broken metadata. Wit
 - quick access button to directly embed metadata to file
 - quick access button to rescan the library directly from book's page
 - this version of Audiobookshelf has all the confirmation messages disabled for quick UI movement
+- BIG BUTTONS for easy and fast metadata hacking
 
 This is not a production-ready app. This is not a Docker container to run in your homelab. It's a hacked version of Audiobookshelf that will make editing your metadata a breeze.
 
-<img alt="ABS EditPro Screenshot" src="https://github.com/krejdster/audiobookshelf-editorpro/raw/master/images/EditPro.jpg" width="600">
+<img alt="ABS EditPro Screenshot" src="https://github.com/krejdster/audiobookshelf-editorpro/raw/master/images/EditPro.jpg" width="800">
 
 ## Workflow
 
