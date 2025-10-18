@@ -16,13 +16,35 @@
 
 [Audiobookshelf](https://github.com/advplyr/audiobookshelf/) is a self-hosted audiobook and podcast server.
 
-Audiobookshelf EditPro is a swiss tool for swift editing of broken metadata. With this toool, it's easy to quickly do all of the operations on the book's metadata:
+# ABS EditPro - Fork changes
+
+I have hundreds of scattered audiobooks with pretty bad metadata. And I love Audiobookshelf. It's great for listening audiobooks and very good for improving metadata. But embedding metadata directly to files and quick metadata operations are not possible because UI has to stay clean for casual user.
+
+How about we don't care about clean UI anymore and make the UI as cluttered as possible to achieve fastest metadata editing / improving / embedding possible? Welcome to Audiobookshelf EditPro.
+
+Audiobookshelf EditPro is a swiss tool for ninja editing of broken metadata. With this tool, it's easy to quickly do all of the metadata operations directly on the book's page:
 - quick edit most important details
-- quick access for editing chapters
-- quick link for m4b conversion
-- quick shortcut to embed metadata
-- quick library rescan directly from book page
+- quick access button for chapter editor
+- quick glance information whether audiobook was already converted from single mp3 files to m4b
+- quick access button for m4b conversion
+- quick access button to directly embed metadata to file
+- quick access button to rescan the library directly from book's page
 - this version of Audiobookshelf has all the confirmation messages disabled for quick UI movement
+
+This is not a production-ready app. This is not a Docker container to run in your homelab. It's a hacked version of Audiobookshelf that will make editing your metadata a breeze.
+
+<img alt="ABS EditPro Screenshot" src="https://github.com/krejdster/audiobookshelf-editorpro/raw/master/images/EditPro.jpg" width="600">
+
+## Workflow
+
+- Run ABS EditPro on your local machine
+- Import all the books you want to fix either from your local machine or NFS/SMB share
+- Go through all the books by quickly editing most crucial metadata
+- Scrape more data from the internet
+- Embed all supported metadata directly to M4B file or MP3 files
+- Queue M4B conversion in the background and move on to another book
+- Force rescan library directly from the book page because it might get messy after a while
+- Keep listening and enjoying audiobooks instead of fighting with metadata!!!
 
 # Run from source
 

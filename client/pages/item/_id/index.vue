@@ -52,14 +52,16 @@
 
           <div class="grow px-2 py-6 lg:py-0 md:px-10">
             <!-- Edytuj-->
-            <ui-btn :aria-label="$strings.LabelEdit" @click="editClick" class="w-full" style="margin: 5px 0">
-              Edytor szczegolow
-            </ui-btn>
+            <div class="w-full">
+              <ui-btn :aria-label="$strings.LabelEdit" @click="editClick" class="w-full" style="margin: 5px 0">
+                Edit important details
+              </ui-btn>
+            </div>
 
             <!-- Edit chapters-->
             <div class="w-full">
               <ui-btn v-if="userCanUpdate" :to="`/audiobook/${libraryItemId}/chapters`" class="w-full" color="bg-primary" @click="clickEditChapters" style="display: block; margin:5px 0">
-                Edytor rozdzialow
+                Edit chapters
               </ui-btn>
             </div>
 
@@ -70,21 +72,21 @@
                 display:block;
                 margin:5px 0
               `">
-                <span v-if="isM4B">Plik jest juz M4B</span>
-                <span v-if="!isM4B">Konwertuj na M4B</span>
+                <span v-if="isM4B">File is already M4B</span>
+                <span v-if="!isM4B">Convert book to M4B</span>
               </ui-btn>
             </div>
 
             <!-- Quick embed -->
             <div class="w-full">
               <ui-btn v-if="!isMetadataEmbedQueued && !isEmbedTaskRunning" class="w-full" color="bg-primary" style="margin:5px 0" @click.stop="quickEmbed">
-                Wbuduj metadane [Tasks: {{ this.tasks }}]
+                Embed metadata to the source files [Tasks: {{ this.tasks }}]
               </ui-btn>
             </div>
 
             <!-- Quick rescan library-->
             <ui-btn @click="quickRescanLib" class="w-full" style="margin: 5px 0">
-              Rescan biblioteki [Tasks: {{ this.tasks }}]
+              Force rescan library [Tasks: {{ this.tasks }}]
             </ui-btn>
           </div>
 
