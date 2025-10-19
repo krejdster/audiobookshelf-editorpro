@@ -129,3 +129,33 @@ If you are using VSCode, this project includes a couple of pre-defined targets t
 - `Debug server`—Run the server.
 - `Debug client (nuxt)`—Run the client with live reload.
 - `Debug server and client (nuxt)`—Runs both the preceding two debug targets.
+
+### Buld Docker and run locally
+
+```sh
+cd audiobookshelf
+docker build -t audiobookshelf:local .
+```
+
+Then
+```sh
+cd ~
+mkdir editpro
+cd editpro
+```
+Now create `docker-compose.yml` file and paste this one:
+
+```sh
+version: "3.9"
+services:
+  audiobookshelf:
+    image: audiobookshelf:local
+    container_name: audiobookshelf
+    ports:
+      - 13378:80
+    volumes:
+      - ./config:/config
+      - ./metadata:/metadata
+      - ./audiobooks:/audiobooks
+    restart: unless-stopped
+```
